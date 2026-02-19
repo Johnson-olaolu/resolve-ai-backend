@@ -1,8 +1,42 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { configureSwagger } from './config/swagger.config';
+import { ConfigService } from '@nestjs/config';
+import { EnvironmentVariables } from './config/env.config';
+import { Logger, ValidationPipe } from '@nestjs/common';
+import { NestExpressApplication } from '@nestjs/platform-express';
+import { join } from 'path';
+import helmet from 'helmet';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  await app.listen(process.env.PORT ?? 3000);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
+    logger: new Logger(),
+  });
+  app.enableCors({
+    origin: '*',
+  });
+  app.use(helmet());
+  await configureSwagger(app, 'documentation');
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      // forbidNonWhitelisted: true,
+      transform: true,
+      transformOptions: {
+        enableImplicitConversion: true,
+      },
+    }),
+  );
+  app.useStaticAssets(join(__dirname, 'public'));
+  app.setBaseViewsDir(join(__dirname, 'templates', 'html'));
+  app.setViewEngine('hbs');
+  await app.listen(
+    app.get(ConfigService<EnvironmentVariables>).get('PORT')!,
+    '0.0.0.0',
+    () =>
+      new Logger('Documentation').log(
+        `http://localhost:${app.get(ConfigService<EnvironmentVariables>).get('PORT')}/documentation`,
+      ),
+  );
 }
 bootstrap();
