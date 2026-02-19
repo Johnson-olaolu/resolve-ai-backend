@@ -5,6 +5,8 @@ export enum USER_ROLES {
   USER = 'user',
 }
 
+export const NonAdminRoles = [USER_ROLES.USER, USER_ROLES.VENDOR];
+
 export enum INVITE_STATUS {
   PENDING = 'pending',
   ACCEPTED = 'accepted',

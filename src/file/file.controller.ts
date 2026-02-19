@@ -14,9 +14,9 @@ import { FileService } from './file.service';
 import { ApiBearerAuth, ApiBody, ApiConsumes } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
-import { User } from 'src/users/entities/user.entity';
 import { FileFoldersEnum } from 'src/utils/constants';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
+import { User } from 'src/user/entities/user.entity';
 
 @Controller('file')
 @ApiBearerAuth()
