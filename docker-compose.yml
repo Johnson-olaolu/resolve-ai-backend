@@ -3,7 +3,6 @@ version: '3.8'
 services:
   redis:
     image: redis/redis-stack:latest
-    container_name: redis-stack
     ports:
       - "6379:6379"
       - "8001:8001"
@@ -14,7 +13,6 @@ services:
 
   postgres:
     image: postgres:15
-    container_name: postgres-db
     ports:
       - "5432:5432"
     environment:
@@ -31,7 +29,6 @@ services:
 
   pgadmin:
     image: dpage/pgadmin4:latest
-    container_name: pgadmin
     ports:
       - "5050:80"
     environment:
@@ -44,7 +41,6 @@ services:
 
   rabbitmq:
     image: rabbitmq:3.13-management
-    container_name: rabbitmq
     ports:
       - "5672:5672"
       - "15672:15672"
