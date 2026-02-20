@@ -20,6 +20,10 @@ import { WalletModule } from './wallet/wallet.module';
 import { TransactionModule } from './transaction/transaction.module';
 import KeyvRedis from '@keyv/redis';
 import { ThrottlerModule } from '@nestjs/throttler';
+import { DisputeModule } from './dispute/dispute.module';
+import { EvidenceSubmissionModule } from './evidence-submission/evidence-submission.module';
+import { DecisionModule } from './decision/decision.module';
+import { ActivitiesModule } from './activities/activities.module';
 
 @Module({
   imports: [
@@ -118,6 +122,10 @@ import { ThrottlerModule } from '@nestjs/throttler';
     ServicesModule,
     WalletModule,
     TransactionModule,
+    DisputeModule,
+    EvidenceSubmissionModule,
+    DecisionModule,
+    ActivitiesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
